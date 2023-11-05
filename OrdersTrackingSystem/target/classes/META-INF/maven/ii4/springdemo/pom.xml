@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
+		<version>3.0.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ii4</groupId>
 	<artifactId>springdemo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>springdemo</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -77,6 +77,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Security -->
+		 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency> 		 
 		
 	</dependencies>
 

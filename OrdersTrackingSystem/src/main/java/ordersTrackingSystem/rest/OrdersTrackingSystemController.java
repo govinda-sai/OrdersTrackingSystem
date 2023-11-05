@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +58,7 @@ public class OrdersTrackingSystemController {
 	OrderItemRepo orderItemRepo;
 
 	// 1. 1
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "add customer", 
 			description = "adds a new customer by taking a request body")
 	@ApiResponses(value = {
@@ -77,7 +80,9 @@ public class OrdersTrackingSystemController {
 //	}
 
 	// 1. 2
-	@Operation(summary = "update customer", description = "updates name of the custpmer for the given customer id")
+	@PreAuthorize("hasRole('ADMIN')")
+	@Operation(summary = "update customer", 
+			description = "updates name of the custpmer for the given customer id")
 	@Parameter(description = "enter customer id")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "customer details updated"),
@@ -101,7 +106,9 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 1. 3
-	@Operation(summary = "delete a customer", description = "deletes a customer with the given customer id")
+	@PreAuthorize("hasRole('ADMIN')")
+	@Operation(summary = "delete a customer", 
+			description = "deletes a customer with the given customer id")
 	@Parameter(description = "enter")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "customer deleted"),
@@ -119,6 +126,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 2. 1
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "add product", description = "adds a product by taking a request body")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "product added"),
@@ -134,6 +142,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 2. 2
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "update product", description = "updates product for the given product id")
 	@Parameter(description = "enter product id")
 	@ApiResponses(value = { 
@@ -159,6 +168,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 2. 3
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "delete a product")
 	@Parameter(description = "enter product id")
 	@ApiResponses(value = { 
@@ -177,6 +187,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 3. 1
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "add order", description = "adds an order and updates order item table by taking request bodies")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "order added"),
@@ -211,7 +222,6 @@ public class OrdersTrackingSystemController {
 				/* @OneToMany */
 				savedOrder.getOrderItems().add(orderItem);
 			}
-
 			orderRepo.save(savedOrder);
 		} catch (DataAccessException e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
@@ -219,6 +229,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 3. 2
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "delete order", description = "deletes order and updates order item table")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "order deleted"),
@@ -241,6 +252,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 4
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "update status of an order", description = "updates status of an order")
 	@Parameter(description = "enter order id and give status parameter")
 	@ApiResponses(value = { 
@@ -279,6 +291,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 5
+	@CrossOrigin
 	@Operation(summary = "list customers")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "customers retrieved"),
@@ -290,6 +303,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	/* 5. pagination */
+	@CrossOrigin
 	@Operation(summary = "list customers by page number", description = "list customers by page number")
 	@Parameter(description = "enter page number")
 	@ApiResponses(value = { 
@@ -302,6 +316,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 6
+	@CrossOrigin
 	@Operation(summary = "list products")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "products retrieved"),
@@ -313,6 +328,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	/* 6. pagination */
+	@CrossOrigin
 	@Operation(summary = "list products by page number")
 	@Parameter(description = "enter page number")
 	@ApiResponses(value = { 
@@ -338,6 +354,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 8
+	@CrossOrigin
 	@Operation(summary = "orders by status", description = "gets order(s) by status")
 	@Parameter(description = "enter status")
 	@ApiResponses(value = { 
@@ -350,6 +367,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 9
+	@CrossOrigin
 	@Operation(summary = "gets orders in the specified order")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "retrieved orders in specified order"),
@@ -361,6 +379,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 10
+	@CrossOrigin
 	@Operation(summary = "gets products that contains a string", description = "gets products containing the given string")
 	@Parameter(description = "enter string")
 	@ApiResponses(value = { 
@@ -373,6 +392,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 11
+	@CrossOrigin
 	@Operation(summary = "gets product details", 
 			description = "retrieves product(s) with a given product id")
 	@Parameter(description = "enter product id")
@@ -381,8 +401,17 @@ public class OrdersTrackingSystemController {
 			@ApiResponse(responseCode = "400", description = "bad request"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@GetMapping("/products/product-details/{productId}")
+	public Object getProductDetailsRest
+						(@PathVariable("productId") Integer productId) {
+		try {
+			var list = getProductDetails(productId);
+			return list;
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
 	public List<AllProductDetailsDTO> getProductDetails
-						(@Valid @PathVariable("productId") Integer productId) {
+	(Integer productId) {
 		var optionalProduct = productRepo.findById(productId);
 		if (optionalProduct.isPresent()) {
 			return orderItemRepo.getAllProductSaleDetails(productId);
@@ -390,6 +419,16 @@ public class OrdersTrackingSystemController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product id not found");
 		}
 	}
+	
+//	public List<AllProductDetailsDTO> getProductDetails
+//						(@Valid @PathVariable("productId") Integer productId) {
+//		var optionalProduct = productRepo.findById(productId);
+//		if (optionalProduct.isPresent()) {
+//			return orderItemRepo.getAllProductSaleDetails(productId);
+//		} else {
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product id not found");
+//		}
+//	}
 
 	// 12
 	@Operation(summary = "all order details", 
