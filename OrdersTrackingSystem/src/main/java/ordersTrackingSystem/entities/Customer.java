@@ -13,6 +13,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity 
 @Table (name = "customers")
@@ -23,9 +27,12 @@ public class Customer {
 	private Integer id;
 	
 	@Column (name = "name") 
+	@NotBlank (message = "customer name cannot be null")
 	private String name;
 	
 	@Column (name = "email")
+	@Email
+	@Size(max = 40, message = "email max length is 40")
 	private String email;
 	
 	@Column (name = "mobile")
