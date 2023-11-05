@@ -13,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity 
 @Table (name = "products")
@@ -23,12 +25,14 @@ public class Product {
 	private Integer productId;
 	
 	@Column (name = "prodname")
+	@NotBlank (message = "product name cannot be blank")
 	private String productName;
 	
 	@Column (name = "description")
 	private String productDescription;
 	
 	@Column (name = "price")
+	@PositiveOrZero (message = "price should be >= 0")
 	private Double price;
 	
 	@JsonIgnore

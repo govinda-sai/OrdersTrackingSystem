@@ -12,7 +12,7 @@ public interface OrderItemRepo extends JpaRepository<OrderItem, Integer> {
 	// 11
 	@Query 
 	("select oi.product.productName as productName, oi.order.customer.name as customerName, "
-			+ "oi.order.orderDate as orderDate, oi.quantity as Quantity, oi.totalPrice as price"
+			+ "oi.order.orderDate as orderDate, oi.quantity as quantity, oi.totalPrice as price"
 			+ " from OrderItem oi where oi.orderItemCK.productId = :productId")
 	List<AllProductDetailsDTO> getAllProductSaleDetails (@Param("productId") Integer productId);
 	

@@ -17,6 +17,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity 
 @Table (name = "customer_orders")
@@ -36,6 +39,7 @@ public class Order {
 	private Character status;
 	
 	@Column (name = "expected_delivery_date")
+	@Future
 	private LocalDate expectedDeliveryDate;
 	
 	@JsonIgnore
