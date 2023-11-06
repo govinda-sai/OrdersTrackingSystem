@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Test Order Tracking System</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script>
+		function getCustomers() {
+			$.ajax({
+				type: "GET",
+				url: "http://localhost:1111/customers", 
+				headers: {
+					"Authorization": "Basic " + btoa("user:user")
+				},
+				success: function (result) {
+					// Manipulate the DOM to update the content of an element with id "response-container"
+					var responseContainer = document.getElementById("response-container1");
+					// Assuming result is a JSON object, convert it to a JSON string for display
+					var jsonString = JSON.stringify(result);
+					// Set the content of the element to the JSON string
+					// alert(jsonString);
+					responseContainer.textContent = jsonString;
+				},
+				error: function (error) {
+					// Handle errors here, if any
+					console.error("Error:", error);
+				}
+			});
+		}
+		
+		function getProducts() {
+			$.ajax({
+				type: "GET",
+				url: "http://localhost:1111/products", 
+				headers: {
+					"Authorization": "Basic " + btoa("user:user")
+				},
+				success: function (result) {
+					// Manipulate the DOM to update the content of an element with id "response-container"
+					var responseContainer = document.getElementById("response-container2");
+					// Assuming result is a JSON object, convert it to a JSON string for display
+					var jsonString = JSON.stringify(result);
+					// Set the content of the element to the JSON string
+					//alert(jsonString);
+					responseContainer.textContent = jsonString;
+				},
+				error: function (error) {
+					// Handle errors here, if any
+					console.error("Error:", error);
+				}
+			});
+		}
+	</script>
+</head>
+
+<body>
+	<h1>Spring Client</h1>
+	<button onclick="getCustomers()">Customers List</button>
+	<button onclick="getProducts()">Products List</button>
+	<div id="response-container1"></div>
+	<div id="response-container2"></div>
+</body>
+
+</html>
