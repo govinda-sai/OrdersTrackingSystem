@@ -14,12 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 public class OrdersSecurityConfiguration {
 	@Bean 
 	public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {	
-		
-//		http.authorizeHttpRequests().requestMatchers("/all/**").permitAll();
-		
-//		http.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");
-		
-//		http.authorizeHttpRequests().requestMatchers(HttpMethod.DELETE, "/admin/**").denyAll();
 			
 		http.authorizeHttpRequests().anyRequest().authenticated();
 		

@@ -9,8 +9,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +58,7 @@ public class OrdersTrackingSystemController {
 	OrderItemRepo orderItemRepo;
 
 	// 1. 1
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')") // method level security configuration
 	@Operation(summary = "add customer", 
 			description = "adds a new customer by taking a request body")
 	@ApiResponses(value = {
@@ -73,11 +73,6 @@ public class OrdersTrackingSystemController {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
-
-//	@PostMapping("/customers/add")
-//	public Customer addCustomer(@Valid @RequestBody Customer customer) {
-//		return customerRepo.save(customer);
-//	}
 
 	// 1. 2
 	@PreAuthorize("hasRole('ADMIN')")
@@ -187,6 +182,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 3. 1
+	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "add order", description = "adds an order and updates order item table by taking request bodies")
 	@ApiResponses(value = { 
@@ -410,8 +406,7 @@ public class OrdersTrackingSystemController {
 			return e.getMessage();
 		}
 	}
-	public List<AllProductDetailsDTO> getProductDetails
-	(Integer productId) {
+	public List<AllProductDetailsDTO> getProductDetails (Integer productId) {
 		var optionalProduct = productRepo.findById(productId);
 		if (optionalProduct.isPresent()) {
 			return orderItemRepo.getAllProductSaleDetails(productId);
@@ -463,6 +458,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", 
 					description = "retrieved orders between a specified period"),
+			@ApiResponse(responseCode = "404", description = "order(s) not found"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@GetMapping("/orders/between-dates")
