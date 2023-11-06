@@ -58,12 +58,13 @@ public class OrdersTrackingSystemController {
 	OrderItemRepo orderItemRepo;
 
 	// 1. 1
-	@PreAuthorize("hasRole('ADMIN')") // method level security configuration
+	@PreAuthorize("hasRole('ADMIN')") // method level security 
 	@Operation(summary = "add customer", 
 			description = "adds a new customer by taking a request body")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "customer added"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PostMapping("/customers/add")
 	public Customer addCustomer(@Valid @RequestBody Customer customer) {
@@ -82,6 +83,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "customer details updated"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PutMapping("/customers/update/{customerId}")
 	public Customer updateCustomer(@Valid @PathVariable("customerId") Integer customerId,
@@ -108,6 +110,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "customer deleted"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@DeleteMapping("/customers/delete/{customerId}")
 	public void deleteCustomer(@PathVariable("customerId") Integer customerId) {
@@ -126,6 +129,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "product added"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PostMapping("/products/add")
 	public Product addProduct(@Valid @RequestBody Product product) {
@@ -143,6 +147,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "product details updated"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PutMapping("/products/update/{productId}")
 	public Product updateProduct(@Valid @PathVariable("productId") Integer productId,
@@ -169,6 +174,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "product deleted"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@DeleteMapping("/products/delete/{productId}")
 	public void deleteProduct(@PathVariable("productId") Integer productId) {
@@ -188,6 +194,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "order added"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PostMapping("/orders/add")
 	public void addOrder(@Valid @RequestBody OrderDTO orderDTO) {
@@ -230,6 +237,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "order deleted"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@DeleteMapping("/orders/delete/{orderId}")
 	public void deleteOrder(@PathVariable("orderId") Integer orderId) {
@@ -254,6 +262,7 @@ public class OrdersTrackingSystemController {
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "order status updated"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PutMapping("/orders/update-status/{orderId}")
 	public Order updateOrderStatus(@PathVariable("orderId") Integer orderId, @RequestParam("status") Character status) {
