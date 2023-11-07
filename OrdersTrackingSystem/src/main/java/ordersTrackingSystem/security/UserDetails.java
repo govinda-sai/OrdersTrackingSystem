@@ -21,7 +21,8 @@ public class UserDetails {
 		org.springframework.security.core.userdetails.UserDetails admin =
 				User.withUsername("admin")
 				.password(passwordEncoder.encode("admin"))
-				.roles("ADMIN", "USER").build();
+				.roles("ADMIN", "USER")
+				.build();
 
 		return new InMemoryUserDetailsManager(user, admin);
 	}

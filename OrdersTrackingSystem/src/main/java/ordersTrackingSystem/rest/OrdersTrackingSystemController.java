@@ -78,12 +78,13 @@ public class OrdersTrackingSystemController {
 	// 1. 2
 	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "update customer", 
-			description = "updates name of the custpmer for the given customer id")
+			description = "updates name of the customer for the given customer id")
 	@Parameter(description = "enter customer id")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "customer details updated"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "404", description = "customer id not found"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PutMapping("/customers/update/{customerId}")
 	public Customer updateCustomer(@Valid @PathVariable("customerId") Integer customerId,
@@ -111,6 +112,7 @@ public class OrdersTrackingSystemController {
 			@ApiResponse(responseCode = "200", description = "customer deleted"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "404", description = "customer id not found"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@DeleteMapping("/customers/delete/{customerId}")
 	public void deleteCustomer(@PathVariable("customerId") Integer customerId) {
@@ -148,6 +150,7 @@ public class OrdersTrackingSystemController {
 			@ApiResponse(responseCode = "200", description = "product details updated"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "404", description = "product id not found"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PutMapping("/products/update/{productId}")
 	public Product updateProduct(@Valid @PathVariable("productId") Integer productId,
@@ -175,6 +178,7 @@ public class OrdersTrackingSystemController {
 			@ApiResponse(responseCode = "200", description = "product deleted"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "404", description = "product id not found"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@DeleteMapping("/products/delete/{productId}")
 	public void deleteProduct(@PathVariable("productId") Integer productId) {
@@ -190,7 +194,8 @@ public class OrdersTrackingSystemController {
 	// 3. 1
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
-	@Operation(summary = "add order", description = "adds an order and updates order item table by taking request bodies")
+	@Operation(summary = "add order", 
+		description = "adds an order and updates order item table by taking request bodies")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "order added"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
@@ -238,6 +243,7 @@ public class OrdersTrackingSystemController {
 			@ApiResponse(responseCode = "200", description = "order deleted"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "404", description = "order id not found"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@DeleteMapping("/orders/delete/{orderId}")
 	public void deleteOrder(@PathVariable("orderId") Integer orderId) {
@@ -250,11 +256,6 @@ public class OrdersTrackingSystemController {
 		}
 	}
 
-	@GetMapping("/orders")
-	public List<Order> getOrders() {
-		return orderRepo.findAll();
-	}
-
 	// 4
 	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "update status of an order", description = "updates status of an order")
@@ -263,6 +264,7 @@ public class OrdersTrackingSystemController {
 			@ApiResponse(responseCode = "200", description = "order status updated"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
+			@ApiResponse(responseCode = "404", description = "order id not found"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@PutMapping("/orders/update-status/{orderId}")
 	public Order updateOrderStatus(@PathVariable("orderId") Integer orderId, @RequestParam("status") Character status) {
@@ -296,7 +298,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 5
-	@CrossOrigin
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "list customers")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "customers retrieved"),
@@ -308,7 +310,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	/* 5. pagination */
-	@CrossOrigin
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "list customers by page number", description = "list customers by page number")
 	@Parameter(description = "enter page number")
 	@ApiResponses(value = { 
@@ -347,11 +349,13 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 7
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "get order", description = "gets order(s) by customer")
 	@Parameter(description = "enter customer id")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "retrieved orders by customer"),
 			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "404", description = "customer id not found"),
 			@ApiResponse(responseCode = "500", description = "internal server error") })
 	@GetMapping("/orders-by-customer/{customerId}")
 	public List<Order> getOrdersByCustomerId(@PathVariable("customerId") Integer customerId) {
@@ -372,7 +376,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 9
-	@CrossOrigin
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "gets orders in the specified order")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "retrieved orders in specified order"),
@@ -385,7 +389,8 @@ public class OrdersTrackingSystemController {
 
 	// 10
 	@CrossOrigin
-	@Operation(summary = "gets products that contains a string", description = "gets products containing the given string")
+	@Operation(summary = "gets products that contains a string", 
+						description = "gets products containing the given string")
 	@Parameter(description = "enter string")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "200", description = "retrieved products containing a string"),
@@ -433,8 +438,23 @@ public class OrdersTrackingSystemController {
 //			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product id not found");
 //		}
 //	}
+	
+//	public Object getProductDetails
+//		(@Valid @PathVariable("productId") Integer productId) {
+//		try {
+//			var optionalProduct = productRepo.findById(productId);
+//			if (optionalProduct.isPresent()) {
+//				return orderItemRepo.getAllProductSaleDetails(productId);
+//			} else {
+//				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product id not found");
+//			}
+//		} catch (Exception e) {
+//			return e.getMessage();
+//		}
+//	}
 
 	// 12
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "all order details", 
 			description = "retrieves all the order details for the given order id")
 	@Parameter(description = "enter order id")
@@ -448,6 +468,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 13
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "products ordered by customer", 
 			description = "retrieves all the products ordered by a customer")
 	@Parameter(description = "enter customer id")
@@ -462,6 +483,7 @@ public class OrdersTrackingSystemController {
 	}
 
 	// 14
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "orders between a specified period", 
 			description = "retrieves all the orders between a specific period")
 	@ApiResponses(value = {
@@ -478,17 +500,26 @@ public class OrdersTrackingSystemController {
 
 		return orderRepo.getOrdersBetween(parseStartDate, parseEndDate);
 	}
-	/*
-	 * @GetMapping("/customers") public List<Customer> getCustomers() { return
-	 * customerRepo.findAll(); }
-	 * 
-	 * @GetMapping("/products") public List<Product> getProducts() { return
-	 * productRepo.findAll(); }
-	 * 
-	 * @GetMapping("/orders") public List<Order> getOrders() { return
-	 * orderRepo.findAll(); }
-	 * 
-	 * @GetMapping("/order-items") public List<OrderItem> getOrderItems() { return
-	 * orderItemRepo.findAll(); }
-	 */
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@Operation(summary = "get orders list", description = "gets orders list")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "orders retrieved"), 
+			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "500", description = "internal server error") })
+	@GetMapping("/orders")
+	public List<Order> getOrders() {
+		return orderRepo.findAll();
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@Operation(summary = "get order items list", description = "gets order items list")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "order items retrieved"), 
+			@ApiResponse(responseCode = "400", description = "bad request"),
+			@ApiResponse(responseCode = "500", description = "internal server error") })
+	@GetMapping("/order-items") 
+	public List<OrderItem> getOrderItems() { 
+		 return orderItemRepo.findAll(); 
+	}
 }

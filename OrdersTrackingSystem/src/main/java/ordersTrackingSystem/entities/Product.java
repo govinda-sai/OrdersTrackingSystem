@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Positive;
 
 @Entity 
 @Table (name = "products")
@@ -32,7 +32,7 @@ public class Product {
 	private String productDescription;
 	
 	@Column (name = "price")
-	@PositiveOrZero (message = "price should be >= 0")
+	@Positive (message = "price should be > 0")
 	private Double price;
 	
 	@JsonIgnore
