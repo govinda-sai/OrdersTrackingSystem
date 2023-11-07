@@ -14,21 +14,18 @@
 					"Authorization": "Basic " + btoa("user:user")
 				},
 				success: function (result) {
-					// Manipulate the DOM to update the content of an element with id "response-container"
 					var responseContainer = document.getElementById("response-container1");
-					// Assuming result is a JSON object, convert it to a JSON string for display
 					var jsonString = JSON.stringify(result);
-					// Set the content of the element to the JSON string
 					// alert(jsonString);
 					responseContainer.textContent = jsonString;
 				},
 				error: function (error) {
-					// Handle errors here, if any
 					console.error("Error:", error);
 				}
 			});
 		}
-		
+	</script>
+	<script>
 		function getProducts() {
 			$.ajax({
 				type: "GET",
@@ -37,12 +34,8 @@
 					"Authorization": "Basic " + btoa("user:user")
 				},
 				success: function (result) {
-					// Manipulate the DOM to update the content of an element with id "response-container"
 					var responseContainer = document.getElementById("response-container2");
-					// Assuming result is a JSON object, convert it to a JSON string for display
 					var jsonString = JSON.stringify(result);
-					// Set the content of the element to the JSON string
-					//alert(jsonString);
 					responseContainer.textContent = jsonString;
 				},
 				error: function (error) {
@@ -59,6 +52,7 @@
 	<button onclick="getCustomers()">Customers List</button>
 	<button onclick="getProducts()">Products List</button>
 	<div id="response-container1"></div>
+	<div>---------------------------------------------------------------------------------------</div>
 	<div id="response-container2"></div>
 </body>
 
