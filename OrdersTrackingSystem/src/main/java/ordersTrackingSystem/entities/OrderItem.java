@@ -9,14 +9,15 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity 
 @Table (name = "order_items")
 public class OrderItem {
-	@EmbeddedId @NotNull 
+	@EmbeddedId
+	@NotNull 
 	private OrderItemCompositeKey orderItemCK;
 	
 	public OrderItem() {
@@ -24,12 +25,12 @@ public class OrderItem {
 	}
 	
 	@Column (name = "qty")
-	@PositiveOrZero (message = "qty should be >= 0")
+	@Positive (message = "qty should be > 0")
 	@NotNull (message = "quantity cannot be null")
 	private Integer quantity;
 	
 	@Column (name = "price") 
-	@PositiveOrZero (message = "qty should be >= 0")
+	@Positive (message = "price should be > 0")
 	@NotNull (message = "price cannot be null")
 	private Double totalPrice;
 	
