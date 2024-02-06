@@ -32,25 +32,72 @@ The Orders Tracking System is a Spring Boot REST API backend application designe
 
 ## API Endpoints
 
-- **Customers:**
-  - `GET /api/customers`: Retrieve all customers.
-  - `GET /api/customers/{id}`: Retrieve customer by ID.
-  - ...
+1. **Add Customer**
+   - Endpoint: `POST /customers/add`
 
-- **Products:**
-  - `GET /api/products`: Retrieve all products.
-  - `GET /api/products/{id}`: Retrieve product by ID.
-  - ...
+2. **Update Customer**
+   - Endpoint: `PUT /customers/update/{customerId}`
 
-- **Orders:**
-  - `GET /api/orders`: Retrieve all orders.
-  - `GET /api/orders/{id}`: Retrieve order by ID.
-  - ...
+3. **Delete Customer**
+   - Endpoint: `DELETE /customers/delete/{customerId}`
 
-- **Order Items:**
-  - `GET /api/order-items`: Retrieve all order items.
-  - `GET /api/order-items/{id}`: Retrieve order item by ID.
-  - ...
+4. **Add Product**
+   - Endpoint: `POST /products/add`
+
+5. **Update Product**
+   - Endpoint: `PUT /products/update/{productId}`
+
+6. **Delete Product**
+   - Endpoint: `DELETE /products/delete/{productId}`
+
+7. **Add Order**
+   - Endpoint: `POST /orders/add`
+
+8. **Delete Order**
+   - Endpoint: `DELETE /orders/delete/{orderId}`
+
+9. **Update Order Status**
+   - Endpoint: `PUT /orders/update-status/{orderId}`
+
+10. **List Customers**
+    - Endpoint: `GET /customers`
+
+11. **List Customers by Page Number**
+    - Endpoint: `GET /customers/{pageno}`
+
+12. **List Products**
+    - Endpoint: `GET /products`
+
+13. **List Products by Page Number**
+    - Endpoint: `GET /products/{pageno}`
+
+14. **Get Orders by Customer**
+    - Endpoint: `GET /orders-by-customer/{customerId}`
+
+15. **Get Orders by Status**
+    - Endpoint: `GET /orders-by-status/{status}`
+
+16. **List Products Ordered by Customer**
+    - Endpoint: `GET /products/products-ordered-by-customer/{customerId}`
+
+17. **Get Orders Between Dates**
+    - Endpoint: `GET /orders/between-dates`
+
+18. **Get Orders in Specified Order**
+    - Endpoint: `GET /orders/inorder`
+
+19. **Get Products with Given String**
+    - Endpoint: `GET /products-with-string/{string}`
+
+20. **Get Product Details**
+    - Endpoint: `GET /products/product-details/{productId}`
+
+21. **Get All Order Details**
+    - Endpoint: `GET /orders/all-order-details/{orderId}`
+
+22. **Get Order Items**
+    - Endpoint: `GET /order-items`
+   
 
 ## Technologies Used
 
