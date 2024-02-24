@@ -15,7 +15,7 @@ The Orders Tracking System is a Spring Boot REST API backend application designe
 
 1. Clone the repository.
    ```bash
-   git clone https://github.com/your-username/orders-tracking-system.git
+   git clone https://github.com/govinda-sai/orders-tracking-system.git
    ```
 
 2. Navigate to the project directory.
