@@ -2,14 +2,14 @@
 
 ## Overview
 
-The Orders Tracking System is a Spring Boot REST API backend application designed to manage customer orders. This system leverages the power of MS SQL Server for data storage and integrates various technologies including Java, Spring Boot, Spring Data, Spring REST, Spring Security, Postman API for testing, and Swagger API for documentation. Key entities such as Customer, Products, Orders (linked to customer ID), and Order Items (containing product ID, customer ID, quantity, and total price) are seamlessly handled to enhance order-related processes.
+The Orders Tracking System is a Spring Boot REST API backend application designed to manage customer orders. This system leverages the power of MS SQL Server for data storage and integrates various technologies including Java, Spring Boot, Spring Data, Spring REST, Spring Security, Postman API for testing, and Swagger API for documentation. Key entities such as Customer, Products, Orders (linked to customer ID), and Order Items (containing product ID, order ID, quantity, and total price) are seamlessly handled to enhance order-related processes.
 
 ## Features
 
 - **Customer Management:** Easily handle customer information.
 - **Product Management:** Maintain a comprehensive product database.
 - **Order Tracking:** Efficiently track orders, associating them with respective customers.
-- **Order Items:** Detailed information on each order item, including product ID, customer ID, quantity, and total price.
+- **Order Items:** Detailed information on each order item, including product ID, order ID, quantity, and total price.
 
 ## Setup
 
